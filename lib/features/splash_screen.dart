@@ -1,3 +1,5 @@
+import 'package:bdcallingtaskmanagerapp/features/onbording_screen.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
@@ -6,6 +8,13 @@ class SplashScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Future.delayed(const Duration(seconds: 5), () {
+      Navigator.push(
+        context,
+        CupertinoPageRoute(builder: (_) => OnboardingScreen()),
+      );
+    });
+
     return Scaffold(
       body: SafeArea(
         child: Stack(
