@@ -4,12 +4,11 @@ import 'package:bdcallingtaskmanagerapp/core/constants/app_constants.dart';
 import 'package:dio/dio.dart';
 import 'package:logger/logger.dart';
 
-class RegisterService {
+class OTPService {
 
-  Future<void> registerUser({
-    required String fullName,
+  Future<void> sendOtp({
     required String email,
-    required String password,
+
     required void Function(Map<String, dynamic> data) onSuccess,
     required void Function(String message) onError,
   }) async {
@@ -17,14 +16,13 @@ class RegisterService {
     final logger = Logger();
 
     try {
-      logger.i('Registering user: $fullName, $email');
+
 
       final response = await dio.post(
-        AppConstants.register,
+        AppConstants.resendOtp,
         data: {
-          'fullName': fullName,
+
           'email': email,
-          'password': password,
         },
         options: Options(
           headers: {
@@ -41,11 +39,11 @@ class RegisterService {
         onError(errorMsg.toString());
       }
     } on DioError catch (dioError) {
-      logger.e('Dio error during registration', error: dioError);
+      logger.e('Dio error during OTP', error: dioError);
       final errorMsg = dioError.response?.data['message'] ?? dioError.message;
       onError(errorMsg.toString());
     } catch (e) {
-      logger.e('Unexpected error during registration', error: e);
+      logger.e('Unexpected error during OTP', error: e);
       onError('Unexpected error: ${e.toString()}');
     }
   }

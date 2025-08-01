@@ -20,13 +20,6 @@ class _DateScreenState extends State<DateScreen> {
     super.initState();
     _selectedDay = _focusedDay;
 
-    _events = {
-      DateTime(2023, 6, 10): [
-        Event('সকাল ১১টায় মিটিং'),
-        Event('বিকাল ৩টায় ডাক্তারের অ্যাপয়েন্টমেন্ট'),
-      ],
-      DateTime(2023, 6, 15): [Event('ফ্লাটার প্রোজেক্ট জমা দেওয়ার শেষ তারিখ')],
-    };
   }
 
   @override
@@ -119,84 +112,13 @@ class _DateScreenState extends State<DateScreen> {
             ),
           ),
           SizedBox(height: 20),
-          Expanded(child: _buildEventList()),
         ],
-      ),
-      floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.add),
-        onPressed: () => _showAddEventDialog(),
-      ),
+      ), 
     );
   }
 
-  Widget _buildEventList() {
-    if (_selectedDay == null || _events[_selectedDay] == null) {
-      return Center(child: Text('কোন ইভেন্ট নেই'));
-    }
 
-    return ListView.builder(
-      itemCount: _events[_selectedDay]!.length,
-      itemBuilder: (context, index) {
-        return Card(
-          margin: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-          child: ListTile(
-            title: Text(_events[_selectedDay]![index].title),
-            trailing: IconButton(
-              icon: Icon(Icons.delete),
-              onPressed: () => _deleteEvent(index),
-            ),
-          ),
-        );
-      },
-    );
-  }
 
-  void _showAddEventDialog() {
-    TextEditingController _controller = TextEditingController();
-
-    showDialog(
-      context: context,
-      builder:
-          (context) => AlertDialog(
-            title: Text('নতুন ইভেন্ট যোগ করুন'),
-            content: TextField(
-              controller: _controller,
-              decoration: InputDecoration(hintText: 'ইভেন্টের বিবরণ লিখুন'),
-            ),
-            actions: [
-              TextButton(
-                child: Text('বাতিল'),
-                onPressed: () => Navigator.pop(context),
-              ),
-              TextButton(
-                child: Text('যোগ করুন'),
-                onPressed: () {
-                  if (_controller.text.isNotEmpty) {
-                    setState(() {
-                      if (_selectedDay != null) {
-                        if (_events[_selectedDay!] == null) {
-                          _events[_selectedDay!] = [];
-                        }
-                        _events[_selectedDay!]!.add(Event(_controller.text));
-                      }
-                    });
-                    Navigator.pop(context);
-                  }
-                },
-              ),
-            ],
-          ),
-    );
-  }
-
-  void _deleteEvent(int index) {
-    setState(() {
-      _events[_selectedDay!]!.removeAt(index);
-      if (_events[_selectedDay!]!.isEmpty) {
-        _events.remove(_selectedDay!);
-      }
-    });
-  }
 }
 
 class Event {

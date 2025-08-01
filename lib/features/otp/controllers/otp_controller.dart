@@ -1,15 +1,17 @@
 import 'package:bdcallingtaskmanagerapp/features/registration/services/register_service.dart';
 import 'package:get/get.dart';
 
-class RegisterController extends GetxController {
-final RegisterService registerService;
+import '../services/otp_service.dart';
 
-RegisterController(this.registerService);
+class OTPController extends GetxController {
+final OTPService otpService;
+
+OTPController(this.otpService);
 
 final RxBool isLoading = false.obs;
 final RxString errorMessage = ''.obs;
 
-Future<void> register({
+Future<void> sendOtp({
   required String fullName,
   required String email,
   required String password,
@@ -20,10 +22,8 @@ Future<void> register({
   errorMessage.value = '';
 
   try {
-    await registerService.registerUser(
-      fullName: fullName,
+    await otpService.sendOtp(
       email: email,
-      password: password,
       onSuccess: (data) {
         isLoading.value = false;
         onSuccess(data);

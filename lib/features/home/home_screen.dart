@@ -80,16 +80,25 @@ class _HomeScreenState extends State<HomeScreen> {
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
+                                  Container(
+                                      padding: EdgeInsets.all(8),
+                                      child: Column(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
-                                      Text("My Business"),
-                                      Text("01-08-25"),
+                                      Row(
+                                        mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Text("My Business"),
+                                          Text("01-08-25"),
+                                        ],
+                                      ),
+                                      Text("-Business Name"),
+                                      Text("-Brand Name"),
                                     ],
-                                  ),
-                                  Text("-Business Name"),
-                                  Text("-Brand Name"),
+                                  )
+                                    )
+                                 
                                 ],
                               ),
                             ),

@@ -1,10 +1,13 @@
 import 'package:bdcallingtaskmanagerapp/core/constants/app_color.dart';
 import 'package:bdcallingtaskmanagerapp/core/widgets/custome_button.dart';
 import 'package:bdcallingtaskmanagerapp/core/widgets/text_field.dart';
-import 'package:bdcallingtaskmanagerapp/features/forget_password.dart';
+import 'package:bdcallingtaskmanagerapp/features/forget/forget_password.dart';
+import 'package:bdcallingtaskmanagerapp/features/home/home_screen.dart';
 import 'package:bdcallingtaskmanagerapp/features/registration/sign_up_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+
+import '../home/bottom_bar.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -20,7 +23,9 @@ class _LoginPageState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColor.bodyColor,
-      body: Column(
+      body: SingleChildScrollView(
+
+      child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Column(
@@ -108,7 +113,7 @@ class _LoginPageState extends State<LoginScreen> {
               ),
             ],
           ),
-
+          SizedBox(height: 180),
           // Bottom content
           Padding(
             padding: const EdgeInsets.only(left: 20, right: 20, bottom: 40),
@@ -162,7 +167,13 @@ class _LoginPageState extends State<LoginScreen> {
                   text: "Login ",
                   width: 327,
                   height: 56,
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      CupertinoPageRoute(builder: (_) => BottomBar()),
+                    );
+
+                  },
                   btnColor: AppColor.primaryColor,
                 ),
                 SizedBox(height: 20),
@@ -203,6 +214,7 @@ class _LoginPageState extends State<LoginScreen> {
           ),
         ],
       ),
+      )
     );
   }
 }

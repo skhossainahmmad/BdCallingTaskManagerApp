@@ -1,7 +1,11 @@
 import 'package:bdcallingtaskmanagerapp/core/constants/app_color.dart';
 import 'package:bdcallingtaskmanagerapp/core/widgets/custome_button.dart';
 import 'package:bdcallingtaskmanagerapp/core/widgets/text_field.dart';
+import 'package:bdcallingtaskmanagerapp/features/otp/otp_code_screen.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+
+import '../registration/sign_up_screen.dart';
 
 class ForgetPassword extends StatefulWidget {
   const ForgetPassword({super.key});
@@ -78,27 +82,35 @@ class _ForgetPasswordState extends State<ForgetPassword> {
               Image.asset(
                 "assets/images/Vector.png",
                 width: 188.67,
-                height: 168,
                 fit: BoxFit.cover,
               ),
             ],
           ),
 
           // Bottom content
-          Padding(
-            padding: const EdgeInsets.only(left: 20, right: 20, bottom: 40),
-            child: Column(
-              children: [
-                CustomeButton(
-                  text: "Send OTP",
-                  width: 327,
-                  height: 56,
-                  onTap: () {},
-                  btnColor: AppColor.primaryColor,
-                ),
-              ],
-            ),
-          ),
+          InkWell(
+            onTap: (){
+              Navigator.push(
+                context,
+                CupertinoPageRoute(builder: (_) => OtpCodeScreen()),
+              );
+            },
+            child:Padding(
+              padding: const EdgeInsets.only(left: 20, right: 20, bottom: 80),
+              child: Column(
+                children: [
+                  CustomeButton(
+                    text: "Send OTP",
+                    width: 327,
+                    height: 56,
+                    onTap: () {},
+                    btnColor: AppColor.primaryColor,
+                  ),
+                ],
+              ),
+            ) ,
+          )
+          ,
         ],
       ),
     );

@@ -3,12 +3,14 @@ import 'package:bdcallingtaskmanagerapp/core/constants/app_color.dart';
 import 'package:bdcallingtaskmanagerapp/core/get_di.dart';
 import 'package:bdcallingtaskmanagerapp/core/widgets/custome_button.dart';
 import 'package:bdcallingtaskmanagerapp/core/widgets/text_field.dart';
-import 'package:bdcallingtaskmanagerapp/features/login_screen.dart';
+import 'package:bdcallingtaskmanagerapp/features/login/login_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:bdcallingtaskmanagerapp/features/registration/controllers/register_controller.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
+
+import '../../core/widgets/Utils.dart';
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({super.key});
@@ -33,9 +35,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
     //   'Error',
     //   error: 'Name: $fullName , Email:$email,Password:$password',
     // );
-    if ((fullName == null || fullName.trim().isEmpty) ||
-        (password == null || password.trim().isEmpty) ||
-        (email == null || email.trim().isEmpty)) {
+    if ((fullName.trim().isEmpty) ||
+        (password.trim().isEmpty) ||
+        (email.trim().isEmpty)) {
       AwesomeDialog(
         context: context,
         dialogType: DialogType.warning,
@@ -47,40 +49,51 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
       return;
     } else {
-      await controller.register(
-        fullName: fullName,
-        email: email,
-        password: password,
+      showLoadingDialog(context, message: "Registering, please wait...");
+      controller.register(
+        fullName: fullName.trim(),
+        email: email.trim(),
+        password: password.trim(),
+        onSuccess: (data) {
+          Navigator.pop(context);
+          AwesomeDialog(
+            context: context,
+            dialogType: DialogType.success,
+            animType: AnimType.rightSlide,
+            title: 'Success',
+            desc: 'You have registered successfully!',
+            btnOkOnPress: () {},
+          ).show();
+
+        },
+        onError: (msg) {
+          Navigator.pop(context);
+          AwesomeDialog(
+            context: context,
+            dialogType: DialogType.warning,
+            animType: AnimType.rightSlide,
+            title: 'Warning',
+            desc: 'Registration failed. Please try again.',
+            btnCancelOnPress: () {},
+          ).show();
+
+        },
       );
 
-      if (controller.errorMessage.value.isEmpty) {
-        Get.snackbar(
-          'Success',
-          'You have registered successfully!',
-          snackPosition: SnackPosition.BOTTOM,
-          duration: Duration(seconds: 3),
-        );
-        // Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => LoginScreen()));
-      }
-
-      // if (controller.response.value != null) {
-      //   Get.snackbar(
-      //     'Success',
-      //     'Registration successful!',
-      //     snackPosition: SnackPosition.BOTTOM,
-      //     duration: const Duration(seconds: 3),
-      //   );
-      //   // Navigate to login or home screen if needed
-      //   // Navigator.pushReplacement(context, CupertinoPageRoute(builder: (_) => HomeScreen()));
-      // }
     }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black,
-      body: Column(
+        backgroundColor: AppColor.bodyColor,
+      body:
+     //  Obx(() {})
+     // return
+
+       SingleChildScrollView(
+        child:
+        Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           // Top content
@@ -142,7 +155,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
               ),
             ],
           ),
-
+          SizedBox(height: 150),
           // Bottom content
           Padding(
             padding: const EdgeInsets.only(left: 20, right: 20, bottom: 40),
@@ -239,6 +252,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
           ),
         ],
       ),
+      )
+
+
     );
   }
 

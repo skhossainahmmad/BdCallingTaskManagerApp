@@ -1,16 +1,17 @@
 import 'package:bdcallingtaskmanagerapp/features/registration/services/register_service.dart';
 import 'package:get/get.dart';
 
-class RegisterController extends GetxController {
-final RegisterService registerService;
+import '../services/login_service.dart';
 
-RegisterController(this.registerService);
+class LoginController extends GetxController {
+final LoginService loginService;
+
+LoginController(this.loginService);
 
 final RxBool isLoading = false.obs;
 final RxString errorMessage = ''.obs;
 
-Future<void> register({
-  required String fullName,
+Future<void> login({
   required String email,
   required String password,
   required void Function(Map<String, dynamic> data) onSuccess,
@@ -20,8 +21,8 @@ Future<void> register({
   errorMessage.value = '';
 
   try {
-    await registerService.registerUser(
-      fullName: fullName,
+    await loginService.loginUser(
+
       email: email,
       password: password,
       onSuccess: (data) {
